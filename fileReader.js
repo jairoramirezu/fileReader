@@ -1,6 +1,7 @@
 const DropArea = document.querySelector(".dropArea");
 const BarLoad = document.querySelector(".barLoad");
 const Result = document.querySelector(".result");
+const Input = document.querySelector(".input");
 
 DropArea.addEventListener("dragover", e => {
   e.preventDefault();
@@ -16,6 +17,10 @@ DropArea.addEventListener("drop", e => {
   e.preventDefault();
   changeStyle(e.target,"blue");
   loadFile(e.dataTransfer.files);
+})
+
+Input.addEventListener("change", ()=> {
+  loadFile(Input.files);
 })
 
 const changeStyle = (obj, color) => {
@@ -53,7 +58,6 @@ const loadFile = ar => {
     }
     reader.addEventListener("progress", e => {
       let load = Math.round((e.loaded / ar[i].size) *100);
-      console.log(load)
       if (load < 100) {
         DropArea.innerHTML = `${load}%`;
         DropArea.classList.add("active");
@@ -63,7 +67,7 @@ const loadFile = ar => {
         setTimeout(() => {
           DropArea.innerHTML = "¡Drop more files here! 👇";
           DropArea.style.color = "var(--white)";
-          DropArea.style.border = "2px dashed var(--darkRed)";
+          DropArea.style.border = "2px dashed var(--white)";
         }, 1200)
       }
     })
